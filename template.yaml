@@ -1,0 +1,29 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: AWS MyApp2 API - my.app2::my-app2
+Globals:
+  Api:
+    EndpointConfiguration: REGIONAL
+Resources:
+  MyApp2Function:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: my.app2.StreamLambdaHandler::handleRequest
+      Runtime: provided
+      CodeUri: target/my-app2-0.1-lambda-package.zip
+      MemorySize: 512
+      Policies: AWSLambdaBasicExecutionRole
+      Timeout: 15
+      Events:
+        GetResource:
+          Type: Api
+          Properties:
+            Path: /{proxy+}
+            Method: any
+
+Outputs:
+  MyApp2Api:
+    Description: URL for application
+    Value: !Sub 'https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/ping'
+    Export:
+      Name: MyApp2Api

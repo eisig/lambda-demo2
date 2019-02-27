@@ -1,0 +1,6 @@
+micronaut:
+    server.port: 8082
+    application:
+        name: my-app2
+jackson:
+    module-scan: false
