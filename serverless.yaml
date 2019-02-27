@@ -27,6 +27,7 @@ provider:
   deploymentBucket:
     name: devtools
   deploymentPrefix: serverless
+  endpointType: regional
 
 # you can add statements to the Lambda function's IAM Role here
 #  iamRoleStatements:
@@ -61,7 +62,9 @@ functions:
 #    NOTE: Please make sure to change your handler code to work with those events
 #    Check the event documentation for details
     events:
-      - http
+      - http:
+          path: /{proxy+}
+          method: any
 
 #      - websocket: $connect
 #      - s3: ${env:BUCKET}
